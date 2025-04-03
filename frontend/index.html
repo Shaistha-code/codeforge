@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeTravel AI | Allergy-Safe Travel Assistant</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Scanner Styles - Add this if you're not using styles.css */
+        .scanner-box {
+            border: 2px dashed #4CAF50;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            margin: 1rem 0;
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+        .scanner-box:hover {
+            background: #f0fff0;
+        }
+        .scanner-animation {
+            position: relative;
+            height: 100px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .laser {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: red;
+            animation: scan 2s infinite;
+            box-shadow: 0 0 10px red;
+        }
+        @keyframes scan {
+            0% { top: 0; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+        }
+        .scanner-box i {
+            font-size: 2.5rem;
+            color: #4CAF50;
+        }
+        #scanner-results {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: #f5f5f5;
+            border-radius: 8px;
+            min-height: 50px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav>
+        <div class="logo">NomadGuard<span>AI</span></div>
+        <ul>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#demo">Try Demo</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Travel Safely with <span>Allergy Protection</span></h1>
+            <p>AI-powered travel planning + real-time allergen detection.</p>
+            <button id="cta-button">Plan Your Trip →</button>
+        </div>
+        <div class="hero-image">
+            <img src="https://i.pinimg.com/736x/29/6f/29/296f29faacb194119ae750c42502733e.jpg" alt="Travel App Demo">
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <h2>Why SafeTravel AI?</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <i class="fas fa-robot"></i>
+                <h3>AI Travel Planner</h3>
+                <p>Get personalized itineraries based on your allergies.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-camera"></i>
+                <h3>Menu Scanner</h3>
+                <p>Scan food labels for allergens instantly.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-globe"></i>
+                <h3>Global Support</h3>
+                <p>Works in 50+ languages.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section (Travel Planner) -->
+    <section id="demo" class="demo">
+        <h2>Try Our AI Travel Assistant</h2>
+        
+        <!-- Travel Planner -->
+        <div class="travel-planner">
+            <div class="input-group">
+                <input type="text" placeholder="Where to? (e.g., Tokyo)" id="destination">
+                <input type="text" placeholder="Allergies? (e.g., peanuts, gluten)" id="allergies">
+                <button id="search-button">Find Safe Options</button>
+            </div>
+            <div class="results" id="results">
+                <p>Enter your trip details to see allergy-safe recommendations!</p>
+            </div>
+        </div>
+        
+        <!-- Scanner Section -->
+        <div class="travel-planner" style="margin-top: 2rem;">
+            <h3>📸 Try Our Allergy Scanner</h3>
+            <div class="scanner-box" onclick="document.getElementById('menu-upload').click()">
+                <div class="scanner-animation">
+                    <div class="laser"></div>
+                    <i class="fas fa-barcode"></i>
+                </div>
+                <p>Click to scan a menu/food package</p>
+                <input type="file" id="menu-upload" accept="image/*" style="display: none;">
+            </div>
+            <div id="scanner-results"></div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <p>© 2024 SafeTravel AI | Made for Hackathon Judges 😊</p>
+    </footer>
+    <script>
+        // Demo: Fake AI Recommendations (for judges)
+        document.getElementById("search-button").addEventListener("click", function() {
+            const destination = document.getElementById("destination").value;
+            const allergies = document.getElementById("allergies").value;
+    
+            if (!destination || !allergies) {
+                alert("Please enter a destination and allergies!");
+                return;
+            }
+    
+            const resultsDiv = document.getElementById("results");
+            resultsDiv.innerHTML = `<p><i class="fas fa-spinner fa-spin"></i> Finding safe options...</p>`;
+            
+            // Simulate AI processing delay
+            setTimeout(() => {
+                let warning = '';
+                if (allergies.toLowerCase().includes('peanut')) {
+                    warning = `<div class="warning" style="background:#FFF3CD; padding:10px; border-radius:5px; margin:10px 0;">
+                        <i class="fas fa-exclamation-triangle"></i> Warning: High peanut allergy risk in ${destination}
+                    </div>`;
+                }
+                
+                resultsDiv.innerHTML = `
+                    <h3>🚀 SafeTravel AI Recommendations for ${destination}</h3>
+                    <p><strong>Allergies Avoided:</strong> ${allergies}</p>
+                    ${warning}
+                    <div class="recommendation">
+                        <h4>🍽️ Safe Restaurants</h4>
+                        <ul>
+                            <li>Green Leaf Bistro (100% nut-free)</li>
+                            <li>Oceanview Grill (gluten-free options)</li>
+                        </ul>
+                    </div>
+                    <div class="recommendation">
+                        <h4>🏨 Allergy-Friendly Hotels</h4>
+                        <ul>
+                            <li>Grand Hyatt (allergen-free rooms)</li>
+                            <li>EcoStay Suites (vegan & gluten-free breakfast)</li>
+                        </ul>
+                    </div>
+                    <p><em>Note: This is a demo. Real AI would analyze 1000+ data points.</em></p>
+                `;
+            }, 1500);
+        });
+    
+        // Animate CTA button
+        document.getElementById("cta-button").addEventListener("mouseover", function() {
+            this.innerHTML = "Get Started Free →";
+        });
+    
+        document.getElementById("cta-button").addEventListener("mouseout", function() {
+            this.innerHTML = "Plan Your Trip →";
+        });
+    
+        // Geolocation with error handling
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (pos) => {
+                    alert(`🌎 Welcome! We see you're near latitude ${pos.coords.latitude.toFixed(1)}`);
+                },
+                (error) => {
+                    console.log("Geolocation error:", error);
+                    // Optional: Show a less intrusive message
+                    document.getElementById("location-message").innerHTML = 
+                        "<p><i class='fas fa-map-marker-alt'></i> Enable location for personalized alerts</p>";
+                }
+            );
+        }
+    
+        // Keep the existing scanner functionality
+        document.getElementById('menu-upload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            const scannerResults = document.getElementById('scanner-results');
+            scannerResults.innerHTML = `<p><i class="fas fa-spinner fa-spin"></i> Scanning for allergens...</p>`;
+            
+            setTimeout(() => {
+                scannerResults.innerHTML = `
+                    <div style="background: #f0f8ff; padding: 1rem; border-radius: 8px;">
+                        <h4>🔍 Scan Results</h4>
+                        <p><strong>Detected Allergens:</strong> Peanuts, Soy</p>
+                        <p><strong>Safe Ingredients:</strong> Chicken, Rice, Vegetables</p>
+                        <p><span style="color: #4CAF50;">✔ This dish is safe for gluten/dairy allergies</span></p>
+                        <p style="font-size: 0.8rem; margin-top: 0.5rem;"><i>Note: Demo shows simulated results</i></p>
+                    </div>
+                `;
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
